@@ -43,15 +43,16 @@ export function ConfirmProvider({ children }: { children: React.ReactNode }) {
       {children}
       {state?.open && (
         <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,.45)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000 }}>
-          <div style={{ width: 420, background: "#fff", borderRadius: 10, padding: 16, boxShadow: "0 10px 30px rgba(0,0,0,.25)" }}>
+          <div style={{ width: 300,  background:
+                "radial-gradient(1000px 600px at -10% 10%, rgba(88,28,135,0.6), transparent 60%), radial-gradient(1000px 600px at 110% 20%, rgba(59,7,100,0.7), transparent 60%), linear-gradient(135deg, #0b1020, #0a0f1f 60%, #0b1020)", borderRadius: 10, padding: 16, boxShadow: "0 10px 30px rgba(0,0,0,.25)" }}>
             <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 8 }}>{state.title || "Are you sure?"}</h3>
             {state.description && (
-              <p style={{ color: "#374151", marginBottom: 12 }}>{state.description}</p>
+              <p style={{ color: "#fff", marginBottom: 12 }}>{state.description}</p>
             )}
             <div style={{ display: "flex", justifyContent: "flex-end", gap: 10 }}>
               <button
                 onClick={() => close(false)}
-                style={{ padding: "8px 12px", borderRadius: 8, border: "1px solid #e5e7eb", background: "#fff", cursor: "pointer" }}
+                style={{ padding: "8px 12px", borderRadius: 8, border: "1px solid #e5e7eb", background: "#0000", cursor: "pointer" }}
               >
                 {state.cancelText || "Cancel"}
               </button>

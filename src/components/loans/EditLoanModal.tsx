@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { Loan, LoanPayment } from "@/lib/loans";
+import Spinner from "@/components/ui/Spinner";
 
 export type EditLoanModalProps = {
   open: boolean;
@@ -86,67 +87,111 @@ export default function EditLoanModal({ open, onClose, onSaved, initial, readOnl
   };
 
   return (
-    <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,.4)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 50 }}>
-      <div style={{ width: 580, maxHeight: "90vh", overflow: "auto", background: "#fff", borderRadius: 8, padding: 16, boxShadow: "0 10px 30px rgba(0,0,0,.2)" }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
-          <h2 style={{ fontSize: 18, fontWeight: 600 }}>{readOnly ? "View Loan" : initial ? "Edit Loan" : "New Loan"}</h2>
-          <button onClick={onClose} style={{ border: 0, background: "transparent", fontSize: 18, cursor: "pointer" }}>✕</button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-3">
+      <div className="w-[95vw] max-w-[680px] max-h-[90vh] overflow-auto rounded-2xl border border-white/10 bg-[#0a0f1f] text-white shadow-xl p-4 md:p-6">
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-lg font-semibold">{readOnly ? "View Member" : initial ? "Edit Member" : "New Member"}</h2>
+          <button onClick={onClose} className="h-9 w-9 inline-flex items-center justify-center rounded-md bg-white/5 hover:bg-white/10">✕</button>
         </div>
 
-        <div style={{ display: "grid", gap: 12 }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: 12 }}>
-            <label>
-              <div>S.No</div>
-              <input type="number" value={sno} onChange={(e) => setSno(Number(e.target.value))} disabled={readOnly} style={{ width: "100%", padding: 8, border: "1px solid #ccc", borderRadius: 6, background: readOnly ? "#f9fafb" : undefined }} />
+        <div className="grid gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <label className="grid gap-1">
+              <span className="text-sm text-slate-300">S.No</span>
+              <input
+                type="number"
+                value={sno}
+                onChange={(e) => setSno(Number(e.target.value))}
+                disabled={readOnly}
+                className="w-full rounded-lg bg-[#0f172a] border border-white/10 px-4 py-3 text-white placeholder:text-slate-400 disabled:opacity-70"
+              />
             </label>
-            <label>
-              <div>Name</div>
-              <input value={name} onChange={(e) => setName(e.target.value)} disabled={readOnly} style={{ width: "100%", padding: 8, border: "1px solid #ccc", borderRadius: 6, background: readOnly ? "#f9fafb" : undefined }} />
+            <label className="md:col-span-2 grid gap-1">
+              <span className="text-sm text-slate-300">Name</span>
+              <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                disabled={readOnly}
+                className="w-full rounded-lg bg-[#0f172a] border border-white/10 px-4 py-3 text-white placeholder:text-slate-400 disabled:opacity-70"
+              />
             </label>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-            <label>
-              <div>Given Date</div>
-              <input type="date" value={givenDate} onChange={(e) => setGivenDate(e.target.value)} disabled={readOnly} style={{ width: "100%", padding: 8, border: "1px solid #ccc", borderRadius: 6, background: readOnly ? "#f9fafb" : undefined }} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <label className="grid gap-1">
+              <span className="text-sm text-slate-300">Given Date</span>
+              <input
+                type="date"
+                value={givenDate}
+                onChange={(e) => setGivenDate(e.target.value)}
+                disabled={readOnly}
+                className="w-full rounded-lg bg-[#0f172a] border border-white/10 px-4 py-3 text-white placeholder:text-slate-400 disabled:opacity-70"
+              />
             </label>
-            <label>
-              <div>Total Amount</div>
-              <input type="number" value={totalAmount} onChange={(e) => setTotalAmount(Number(e.target.value))} disabled={readOnly} style={{ width: "100%", padding: 8, border: "1px solid #ccc", borderRadius: 6, background: readOnly ? "#f9fafb" : undefined }} />
+            <label className="grid gap-1">
+              <span className="text-sm text-slate-300">Total Amount</span>
+              <input
+                type="number"
+                value={totalAmount}
+                onChange={(e) => setTotalAmount(Number(e.target.value))}
+                disabled={readOnly}
+                className="w-full rounded-lg bg-[#0f172a] border border-white/10 px-4 py-3 text-white placeholder:text-slate-400 disabled:opacity-70"
+              />
             </label>
           </div>
 
-          <label>
-            <div>Interest</div>
-            <input type="number" value={interest} onChange={(e) => setInterest(Number(e.target.value))} disabled={readOnly} style={{ width: "100%", padding: 8, border: "1px solid #ccc", borderRadius: 6, background: readOnly ? "#f9fafb" : undefined }} />
+          <label className="grid gap-1">
+            <span className="text-sm text-slate-300">Interest</span>
+            <input
+              type="number"
+              value={interest}
+              onChange={(e) => setInterest(Number(e.target.value))}
+              disabled={readOnly}
+              className="w-full rounded-lg bg-[#0f172a] border border-white/10 px-4 py-3 text-white placeholder:text-slate-400 disabled:opacity-70"
+            />
           </label>
 
           <div>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-              <h3 style={{ fontWeight: 600 }}>Payments</h3>
+            <div className="flex items-center justify-between">
+              <h3 className="font-semibold">Payments</h3>
               {!readOnly && (
-                <button type="button" onClick={addPayment} style={{ padding: "6px 10px", borderRadius: 6, border: "1px solid #ccc", background: "#f9fafb", cursor: "pointer" }}>+ Add Payment</button>
+                <button type="button" onClick={addPayment} className="px-3 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10">+ Add Payment</button>
               )}
             </div>
-            <div style={{ display: "grid", gap: 8, marginTop: 8 }}>
+            <div className="grid gap-2 mt-2">
               {paid.map((p, idx) => (
-                <div key={idx} style={{ display: "grid", gridTemplateColumns: "1fr 1fr auto", gap: 8 }}>
-                  <input type="number" value={p.amount} onChange={(e) => updatePayment(idx, { amount: Number(e.target.value) })} placeholder="Amount" disabled={readOnly} style={{ padding: 8, border: "1px solid #ccc", borderRadius: 6, background: readOnly ? "#f9fafb" : undefined }} />
-                  <input type="date" value={p.date.slice(0,10)} onChange={(e) => updatePayment(idx, { date: e.target.value })} disabled={readOnly} style={{ padding: 8, border: "1px solid #ccc", borderRadius: 6, background: readOnly ? "#f9fafb" : undefined }} />
+                <div key={idx} className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                  <input
+                    type="number"
+                    value={p.amount}
+                    onChange={(e) => updatePayment(idx, { amount: Number(e.target.value) })}
+                    placeholder="Amount"
+                    disabled={readOnly}
+                    className="w-full rounded-lg bg-[#0f172a] border border-white/10 px-4 py-3 text-white placeholder:text-slate-400 disabled:opacity-70"
+                  />
+                  <input
+                    type="date"
+                    value={p.date.slice(0,10)}
+                    onChange={(e) => updatePayment(idx, { date: e.target.value })}
+                    disabled={readOnly}
+                    className="w-full rounded-lg bg-[#0f172a] border border-white/10 px-4 py-3 text-white placeholder:text-slate-400 disabled:opacity-70"
+                  />
                   {!readOnly && (
-                    <button type="button" onClick={() => removePayment(idx)} style={{ padding: "6px 10px", borderRadius: 6, border: 0, background: "#ef4444", color: "#fff", cursor: "pointer" }}>Remove</button>
+                    <button type="button" onClick={() => removePayment(idx)} className="px-3 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600">Remove</button>
                   )}
                 </div>
               ))}
             </div>
           </div>
 
-          {error && <div style={{ color: "#b00020" }}>{error}</div>}
+          {error && <div className="text-red-400">{error}</div>}
 
-          <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
-            <button onClick={onClose} disabled={saving} style={{ padding: "8px 12px", borderRadius: 6, border: "1px solid #ccc", background: "#fff", cursor: "pointer" }}>Close</button>
+          <div className="flex gap-2 justify-end pt-1">
+            <button onClick={onClose} disabled={saving} className="px-4 py-2 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 disabled:opacity-70">Close</button>
             {!readOnly && (
-              <button onClick={onSubmit} disabled={saving} style={{ padding: "8px 12px", borderRadius: 6, border: 0, background: "#111827", color: "#fff", cursor: "pointer" }}>{saving ? "Saving..." : "Save"}</button>
+              <button onClick={onSubmit} disabled={saving} className="px-4 py-2 rounded-lg bg-sky-600 hover:bg-sky-700 text-white disabled:opacity-70 inline-flex items-center gap-2">
+                {saving ? (<><Spinner size={18} /><span>Saving...</span></>) : "Save"}
+              </button>
             )}
           </div>
         </div>

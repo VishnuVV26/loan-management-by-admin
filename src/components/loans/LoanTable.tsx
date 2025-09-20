@@ -116,12 +116,12 @@ export default function LoanTable() {
   }, [items]);
 
   return (
-    <div style={{ width: "100%" }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12, width: "100%" }}>
-        <h2 style={{ fontSize: 20, fontWeight: 700 }}>Loans</h2>
+    <div className="w-full md:p-3 flex flex-col gap-4 justify-center items-center">
+      <div className="flex items-center justify-between mb-3 w-full">
+        {/* <h2 className="text-lg font-semibold">Loans</h2> */}
         {canEdit && (
-          <button onClick={onNew} style={{ padding: "8px 12px", borderRadius: 6, border: 0, background: "#111827", color: "#fff", cursor: "pointer" }}>
-            + New Loan
+          <button onClick={onNew} className="px-3 py-2 rounded-md border-0 bg-gray-900 text-white cursor-pointer shadow-sm hover:bg-gray-800">
+            + New Member
           </button>
         )}
       </div>
@@ -129,12 +129,12 @@ export default function LoanTable() {
       {loading ? (
         <div>Loading...</div>
       ) : error ? (
-        <div style={{ color: "#b00020" }}>{error}</div>
+        <div className="text-red-600">{error}</div>
       ) : (
-        <div style={{ width: "100%", overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
-          <table style={{ width: "100%", borderCollapse: "separate", borderSpacing: 0 }}>
-            <thead style={{ position: "sticky", top: 0, zIndex: 1 }}>
-              <tr style={{ background: "#f3f4f6" }}>
+        <div className="w-full overflow-x-auto [webkit-overflow-scrolling:touch]">
+          <table className="w-full border-separate border-spacing-0">
+            <thead className="sticky top-0 z-10 backdrop-blur supports-[backdrop-filter]:bg-white/10 bg-white/5 shadow-[0_2px_0_0_rgba(255,255,255,0.06)]">
+              <tr>
                 <Th>S.No</Th>
                 <Th>Name</Th>
                 <Th>Date Given</Th>
@@ -148,7 +148,7 @@ export default function LoanTable() {
             </thead>
             <tbody>
               {rows.map((r: LoanRow, idx: number) => (
-                <tr key={r._id || r.sno} style={{ background: idx % 2 === 0 ? "#ffffff" : "#fafafa" }}>
+                <tr key={r._id || r.sno} className={idx % 2 === 0 ? "bg-white/0" : "bg-white/[0.02]"}>
                   <Td>{r.sno}</Td>
                   <Td>{r.name}</Td>
                   <Td>{new Date(r.givenDate).toLocaleDateString()}</Td>
@@ -158,10 +158,10 @@ export default function LoanTable() {
                   <Td>{r.totalPaid}</Td>
                   <Td>{r.balance}</Td>
                   <Td>
-                    <IconButton label="View" onClick={() => onView(r)}>
+                    <IconButton label="View" blue onClick={() => onView(r)}>
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg>
                     </IconButton>
-                    <IconButton label="Edit" onClick={() => onEdit(r)}>
+                    <IconButton label="Edit" green onClick={() => onEdit(r)}>
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3Z"/></svg>
                     </IconButton>
                     <IconButton label="Delete" danger onClick={() => onDelete(r)}>
@@ -172,9 +172,7 @@ export default function LoanTable() {
               ))}
               {rows.length === 0 && (
                 <tr>
-                  <Td colSpan={canEdit ? 9 : 8} style={{ textAlign: "center", padding: 16 }}>
-                    No data
-                  </Td>
+                  <Td colSpan={canEdit ? 9 : 8} className="text-center p-4">No data</Td>
                 </tr>
               )}
             </tbody>
@@ -195,36 +193,33 @@ export default function LoanTable() {
 
 function Th({ children }: { children: React.ReactNode }) {
   return (
-    <th style={{ textAlign: "left", borderBottom: "1px solid #e5e7eb", padding: "12px 10px", fontWeight: 600, fontSize: 13 }}>
-      {children}
-    </th>
+    <th className="text-left border-b border-white/10 px-2 py-3 font-semibold text-[10px] md:text-[13px] text-foreground">{children}</th>
   );
 }
 
-function Td({ children, colSpan, style }: { children: React.ReactNode; colSpan?: number; style?: React.CSSProperties }) {
+function Td({ children, colSpan, style, className }: { children: React.ReactNode; colSpan?: number; style?: React.CSSProperties; className?: string }) {
   return (
-    <td colSpan={colSpan} style={{ borderBottom: "1px solid #f3f4f6", padding: "12px 10px", fontSize: 13, ...style }}>
-      {children}
-    </td>
+    <td colSpan={colSpan} style={style} className={`border-b border-white/10 px-2 py-3 text-[10px] md:text-[13px] text-foreground ${className || ""}`}>{children}</td>
   );
 }
 
-function IconButton({ label, onClick, children, danger }: { label: string; onClick: () => void; children: React.ReactNode; danger?: boolean }) {
+function IconButton({ label, onClick, children, danger,green,blue }: { label: string; onClick: () => void; children: React.ReactNode; danger?: boolean, green?: boolean, blue?: boolean }) {
   return (
     <button
       onClick={onClick}
       title={label}
       aria-label={label}
-      style={{
-        padding: "6px 8px",
-        borderRadius: 6,
-        border: danger ? 0 : "1px solid #e5e7eb",
-        background: danger ? "#ef4444" : "#fff",
-        color: danger ? "#fff" : "#111827",
-        cursor: "pointer",
-        marginRight: 8,
-        boxShadow: danger ? "0 2px 6px rgba(239,68,68,.35)" : "0 1px 3px rgba(0,0,0,.06)",
-      }}
+      className={
+        `px-2 py-1.5 rounded-md mr-2 mb-1 cursor-pointer shadow ${
+          danger
+            ? "bg-red-500 text-white shadow-red-200 hover:bg-red-600"
+            : green
+              ? "bg-green-500 text-white shadow-green-200 hover:bg-green-600"
+              : blue
+                ? "bg-blue-500 text-white shadow-blue-200 hover:bg-blue-600"
+                : "bg-white text-gray-900 border border-gray-200 hover:bg-gray-50"
+        }`
+      }
     >
       {children}
     </button>

@@ -33,20 +33,25 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   return (
     <ToastContext.Provider value={value}>
       {children}
-      <div style={{ position: "fixed", top: 16, right: 16, display: "grid", gap: 8, zIndex: 1000 }}>
+      <div className="fixed z-[1000] grid gap-2 left-2 right-2 bottom-4 top-auto sm:left-auto sm:right-4 sm:top-4 sm:bottom-auto">
         {toasts.map((t) => (
-          <div key={t.id} style={{
-            minWidth: 260,
-            maxWidth: 360,
-            padding: "10px 12px",
-            borderRadius: 8,
-            color: t.type === "warning" ? "#7c2d12" : t.type === "error" ? "#7f1d1d" : t.type === "success" ? "#065f46" : "#111827",
-            background: t.type === "warning" ? "#fef3c7" : t.type === "error" ? "#fee2e2" : t.type === "success" ? "#d1fae5" : "#e5e7eb",
-            boxShadow: "0 5px 15px rgba(0,0,0,.15)",
-            border: "1px solid rgba(0,0,0,.08)",
-            fontSize: 14,
-          }}>
-            {t.message}
+          <div
+            key={t.id}
+            className="w-full sm:w-auto min-w-[200px] sm:min-w-[260px] max-w-full sm:max-w-[360px] px-3 py-2.5 rounded-lg text-[14px] bg-[#0a0f1f] text-foreground border border-white/10 shadow-[0_5px_15px_rgba(0,0,0,0.35)] flex items-start gap-3"
+          >
+            <span
+              className={
+                "mt-0.5 h-3.5 w-3.5 rounded-full " +
+                (t.type === "success"
+                  ? "bg-emerald-500"
+                  : t.type === "error"
+                  ? "bg-rose-500"
+                  : t.type === "warning"
+                  ? "bg-amber-400"
+                  : "bg-sky-500")
+              }
+            />
+            <span className="leading-5">{t.message}</span>
           </div>
         ))}
       </div>

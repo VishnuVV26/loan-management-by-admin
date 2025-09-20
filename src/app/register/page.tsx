@@ -27,58 +27,52 @@ export default function RegisterPage() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <form onSubmit={onSubmit} style={{ width: 360, display: "grid", gap: 12 }}>
-        <h1 style={{ fontSize: 24, fontWeight: 600, marginBottom: 8 }}>Register</h1>
+    <div className="min-h-screen flex items-center justify-center p-4">
+      <form onSubmit={onSubmit} className="w-full max-w-sm grid gap-3">
+        <h1 className="text-2xl font-semibold mb-2">Register</h1>
 
-        <label style={{ display: "grid", gap: 6 }}>
-          <span>Email</span>
+        <label className="grid gap-1.5">
+          <span className="text-sm">Email</span>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
             placeholder="you@example.com"
-            style={{ padding: 10, border: "1px solid #ccc", borderRadius: 6 }}
+            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-900/20"
           />
         </label>
 
-        <label style={{ display: "grid", gap: 6 }}>
-          <span>Password</span>
+        <label className="grid gap-1.5">
+          <span className="text-sm">Password</span>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
             placeholder="••••••••"
-            style={{ padding: 10, border: "1px solid #ccc", borderRadius: 6 }}
+            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-900/20"
           />
         </label>
 
         {/* No role selection needed; any authenticated user is an admin for this dashboard */}
 
         {message && (
-          <div style={{ color: message.includes("successfully") ? "#065f46" : "#b00020" }}>{message}</div>
+          <div className={message.includes("successfully") ? "text-emerald-700" : "text-red-600"}>{message}</div>
         )}
 
         <button
           type="submit"
           disabled={loading}
-          style={{
-            marginTop: 8,
-            padding: 10,
-            borderRadius: 6,
-            border: 0,
-            background: loading ? "#9aa0a6" : "#111827",
-            color: "white",
-            cursor: loading ? "not-allowed" : "pointer",
-          }}
+          className={`mt-2 px-3 py-2 rounded-md border-0 text-white shadow-sm ${
+            loading ? "bg-gray-400 cursor-not-allowed" : "bg-gray-900 hover:bg-gray-800"
+          }`}
         >
           {loading ? "Creating account..." : "Create account"}
         </button>
 
-        <p style={{ fontSize: 14 }}>
-          Already have an account? <Link href="/login">Login</Link>
+        <p className="text-sm">
+          Already have an account? <Link className="underline" href="/login">Login</Link>
         </p>
       </form>
     </div>

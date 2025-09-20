@@ -75,7 +75,7 @@ export default function LoginPage() {
         </button>
 
         <p style={{ fontSize: 14 }}>
-          Don&apos;t have an account? <Link href="/register">Register</Link>
+          Don&apos;t have an account? <Link href="/signup">Sign up</Link>
         </p>
       </form>
     </div>
