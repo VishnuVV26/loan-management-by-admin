@@ -193,13 +193,13 @@ export default function LoanTable() {
 
 function Th({ children }: { children: React.ReactNode }) {
   return (
-    <th className="text-left border-b border-white/10 px-2 py-3 font-semibold text-[10px] md:text-[13px] text-foreground">{children}</th>
+    <th className="text-left border-b border-white/10 px-2 py-3 font-semibold text-[12px] md:text-[13px] text-foreground">{children}</th>
   );
 }
 
 function Td({ children, colSpan, style, className }: { children: React.ReactNode; colSpan?: number; style?: React.CSSProperties; className?: string }) {
   return (
-    <td colSpan={colSpan} style={style} className={`border-b border-white/10 px-2 py-3 text-[10px] md:text-[13px] text-foreground ${className || ""}`}>{children}</td>
+    <td colSpan={colSpan} style={style} className={`border-b border-white/10 px-2 py-3 text-[12px] md:text-[13px] text-foreground ${className || ""}`}>{children}</td>
   );
 }
 

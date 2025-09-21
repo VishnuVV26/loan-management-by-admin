@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useAuth } from "@/context/authContext";
 import React, { useState } from "react";
+import Image from "next/image";
 
 export default function Header() {
   const { user, logout } = useAuth();
@@ -13,8 +14,8 @@ export default function Header() {
       <div className="mx-auto max-w-7xl px-3 md:px-6 h-14 flex items-center justify-between text-foreground">
         <div className="flex items-center gap-3">
           <Link href="/" className="inline-flex items-center gap-2 font-semibold tracking-wide">
-            <span className="inline-block h-2 w-2 rounded-full bg-fuchsia-500 shadow-[0_0_15px_2px_rgba(217,70,239,0.7)]"></span>
-            <span className="">LOAN MANAGEMENT</span>
+            <Image src="/logo.jpg" alt="Loan Management admin logo" width={28} height={28} className="rounded-full" />
+            <span className="">Loan Management admin</span>
           </Link>
         </div>
 

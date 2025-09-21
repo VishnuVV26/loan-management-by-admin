@@ -7,7 +7,12 @@ import { Poppins } from "next/font/google";
 import Header from "@/components/layout/Header";
 
 export const metadata: Metadata = {
-  title: "Next.js Auth Example",
+  title: "Loan Management admin",
+  icons: {
+    icon: "/logo.jpg",
+    shortcut: "/logo.jpg",
+    apple: "/logo.jpg",
+  },
 };
 
 const poppins = Poppins({
